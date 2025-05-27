@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Healthcare Perspective Summarizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='contract.png') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto Mono', monospace;
+            background: linear-gradient(135deg, #f5f1ff 0%, #e6e1ff 50%, #d8ccff 100%);
+            background-attachment: fixed;
+            color: #2c2c2c;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #f5f1ff 0%, #e6e1ff 50%, #d8ccff 100%);
+            border-bottom: 2px solid #cbb3ff;
+        }
+
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: #7e3ff2;
+            font-weight: bold;
+        }
+
+        .nav-buttons button {
+            background: transparent;
+            border: 2px solid #7e3ff2;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            color: #7e3ff2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #7e3ff2;
+            color: white;
+        }
+
+        .main-title {
+           text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            color: #1a102e; /* deep purple-black, similar to the image */
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .input-container,
+        .summary-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 40%;
+            min-height: 300px;
+        }
+
+        textarea {
+            width: 94%; 
+            max-width: 800px;
+            height: 200px;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            resize: vertical;
+        }
+
+        label, select {
+            font-size: 1.1rem;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        select {
+            padding: 0.5rem;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin-left: 1rem;
+        }
+
+        input[type="submit"] {
+            background-color: #7e3ff2;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 20px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #5d29c2;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            /* flex-direction: column; */
+            justify-content: center;
+        }
+
+        .summary-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: #eee;
+            font-weight: bold;
+        }
+
+        .summary-output {
+            min-height: 150px;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            background-color: #f9f8ff;
+        }
+
+        .summary-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .download-btn,
+        .copy-btn {
+            background: #aaa;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .input-container,
+            .summary-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">SMMRY</div>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='/'">Home</button>
+            <button onclick="window.location.href='/help'">Help</button>
+        </div>
+    </header>
+
+    <h1 class="main-title">
+        Summarize Healthcare Answers<br>
+        Based on Perspective
+    </h1>
+
+    <div class="main-container">
+        <div class="input-container">
+            <form method="post">
+                <div class="form-group">
+                    <textarea name="input_text" placeholder="Paste your healthcare-related text here...">{{ input_text }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="perspective">Select Perspective:</label>
+                    <select name="perspective">
+                        <option value="information">Information</option>
+                        <option value="cause">Cause</option>
+                        <option value="suggestion">Suggestion</option>
+                        <option value="experience">Experience</option>
+                        <option value="question">Question</option>
+                    </select>
+                </div>
+                <input type="submit" value="Summarize">
+            </form>
+        </div>
+
+        <div class="summary-container">
+            {% if final_summary %}
+            <!-- <div class="summary-header">
+                <button class="tab active">Summary</button>
+                <button class="tab">Bold Essentials</button>
+                <button class="tab">Bullet List</button>
+                <button class="tab">One Liner</button>
+            </div> -->
+            <div class="summary-output" id="summaryText">
+                {{ final_summary }}
+            </div>
+            <div class="summary-actions">
+                <button class="download-btn" onclick="downloadSummary()">⬇ Download</button>
+                <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        function copyToClipboard() {
+            const text = document.getElementById("summaryText").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Summary copied to clipboard!");
+            }).catch(err => {
+                alert("Failed to copy: " + err);
+            });
+        }
+
+        function downloadSummary() {
+            const text = document.getElementById("summaryText").innerText;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "summary.txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
