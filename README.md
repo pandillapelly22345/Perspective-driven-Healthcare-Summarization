@@ -64,13 +64,18 @@ Metrics used:
 ---
 
 ## 🧩 Project Structure
-📦 app/
-├── app.py # Streamlit or Flask app
-├── utils.py # Loading models and ensemble logic
-├── fine_tuned_model/ # Flan-T5 with LoRA (uploaded to Hugging Face)
-├── fine_tuned_bart/ # Fine-tuned BART (uploaded to Hugging Face)
-├── requirements.txt # Dependencies
-├── README.md # This file
+app/
+├── app.py                  # Main Flask or Streamlit application
+├── utils.py                # Helper functions for model loading and ensemble generation
+├── fine_tuned_model/       # Flan-T5 LoRA adapter files (uploaded to Hugging Face)
+├── fine_tuned_bart/        # Fine-tuned BART model files (uploaded to Hugging Face)
+├── static/                 # Static assets (CSS, JS if needed)
+├── templates/              # HTML templates for frontend
+│   ├── index.html
+│   └── summarizer.html
+├── requirements.txt        # All Python dependencies
+└── README.md               # Project documentation (this file)
+
 
 
 ---
