@@ -6,6 +6,14 @@ This project presents a perspective-aware abstractive summarization system for m
 
 ---
 
+## 🔗 Code Repository
+
+The complete source code is available at:
+
+👉 **GitHub Repo:** [https://github.com/pandillapelly22345/Perspective-driven-Healthcare-Summarization](https://github.com/pandillapelly22345/Efficient-Summarization-of-Healthcare-Responses---NLP-Project)
+
+---
+
 ## 🧠 Motivation
 
 Online health forums provide valuable information, but user-generated answers vary in quality and reliability. Users often struggle to extract meaningful insights due to:
@@ -49,6 +57,7 @@ We compare outputs from BART and Flan-T5 and **stack them using a selection heur
 ---
 
 ## 🧪 Evaluation
+As the summerization was seen better in ensemble method as compared to weak supervision so we used the ensemble method models in the app.
 
 Metrics used:
 - **BERTScore** (semantic similarity)
@@ -60,23 +69,6 @@ Metrics used:
 | BART        | 0.8907        | 0.0883 | 0.2544 |
 | Flan-T5     | 0.8632        | 0.0363 | 0.1856 |
 | **Stacked** | 0.8815        | 0.0747 | 0.2386 |
-
----
-
-## 🧩 Project Structure
-app/
-├── app.py                  # Main Flask or Streamlit application
-├── utils.py                # Helper functions for model loading and ensemble generation
-├── fine_tuned_model/       # Flan-T5 LoRA adapter files (uploaded to Hugging Face)
-├── fine_tuned_bart/        # Fine-tuned BART model files (uploaded to Hugging Face)
-├── static/                 # Static assets (CSS, JS if needed)
-├── templates/              # HTML templates for frontend
-│   ├── index.html
-│   └── summarizer.html
-├── requirements.txt        # All Python dependencies
-└── README.md               # Project documentation (this file)
-
-
 
 ---
 
